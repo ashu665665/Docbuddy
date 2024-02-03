@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Print Page</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <!-- <div id="print-container"> -->
+  <!-- A4-sized box with background image -->
+  <div id="a4-box">
+    <!-- Patient-Detsils goes here -->
+    <div id="current-date">
+      <p><strong><span id="currentDate"></span></strong></p>
+    </div>
+    <div id="patient-name">
+      <p><strong>
+          <%= patient.patient_name %>
+        </strong></p>
+    </div>
+    <div id="patient-age">
+      <p><strong>
+          <%= patient.patient_age %>
+        </strong></p>
+    </div>
+    <div id="patient-gender">
+      <p><strong>
+          <%= patient.patient_gender %>
+        </strong></p>
+    </div>
+
+
+    <!-- Chief-Complaint goes here -->
+    <div id="chiefComplaint">
+      <p style="font-size:small;"><strong>C/O :</strong></p>
+      <p class="chief-complaint-text" id="chiefComplaintText">
+        <%= formData.chiefComplaint %>
+      </p>
+    </div>
+
+    <!-- OnExamination goes here -->
+    <div id="onExamination">
+      <p style="font-size: small;"><strong>O/E :</strong></p>
+      <p class="on-examination-text" id="onExaminationText">
+        <span>Weight: <%= formData.weight %></span>
+        <span>Bp: <%= formData.bloodPressure %></span>
+        <span>Blood Group: <%= patient.patient_bloodgroup %></span>
+      </p>
+    </div>
+
+    <!-- Advice goes here -->
+    <div id="advice">
+      <p style="font-size: small;"><strong>ADVICE :</strong></p>
+      <% if (Array.isArray(formData.labTestName)) { %>
+        <ul class="advice-list" id="adviceList">
+          <% formData.labTestName.forEach(function(item) { %>
+            <li>
+              <%= item %>
+            </li>
+            <% }); %>
+        </ul>
+        <% } else if (formData.labTestName) { %>
+          <!-- If there's only a single item, not in an array -->
+          <ul class="advice-list" id="adviceList">
+            <li>
+              <%= formData.labTestName %>
+            </li>
+          </ul>
+          <% } %>
+    </div>
+
+    <!-- Medicine goes here -->
+    <div id="medicine">
+      <p style="font-size: small;"><strong>MEDICINE :</strong></p>
+      <% if (Array.isArray(formData.medicineName)) { %>
+        <table id="medicineTable" class="medicine-table">
+          <thead>
+            <tr>
+              <th>Medicine</th>
+              <th>Quantity</th>
+              <th>Timings</th>
+            </tr>
+          </thead>
+          <tbody id="medicineTableBody">
+            <% formData.medicineName.forEach(function(item, i) { %>
+              <tr>
+                <td>
+                  <%= item %>
+                </td>
+                <td>
+                  <%= (formData.quantity && formData.quantity[i]) || '-' %>
+                </td>
+                <td>
+                  <%= (formData.price && formData.price[i]) || '-' %>
+                </td>
+              </tr>
+              <% }); %>
+          </tbody>
+        </table>
+        <% } else if (formData.medicineName) { %>
+          <!-- If there's only a single item, not in an array -->
+          <table id="medicineTable" class="medicine-table">
+            <thead>
+              <tr>
+                <th>Medicine</th>
+                <th>Quantity</th>
+                <th>Timings</th>
+              </tr>
+            </thead>
+            <tbody id="medicineTableBody">
+              <tr>
+                <td>
+                  <%= formData.medicineName %>
+                </td>
+                <td>
+                  <%= formData.quantity || '-' %>
+                </td>
+                <td>
+                  <%= formData.price || '-' %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <% } %>
+    </div>
+
+
+    <!-- PanchKarma goes here -->
+    <div id="panchakarma">
+      <p style="font-size: small;"><strong>PANCHAKARMA :</strong></p>
+      <% if (formData && formData.panchakarma) { %>
+        <% if (Array.isArray(formData.panchakarma)) { %>
+          <ul class="panchakarma-list" id="panchakarmaList">
+            <% formData.panchakarma.forEach(function(item) { %>
+              <li>
+                <%= item %>
+              </li>
+              <% }); %>
+          </ul>
+          <% } else { %>
+            <!-- If there's only a single item, not in an array -->
+            <ul class="panchakarma-list" id="panchakarmaList">
+              <li>
+                <%= formData.panchakarma %>
+              </li>
+            </ul>
+            <% } %>
+              <% } %>
+    </div>
+
+    <!-- Print and PatientList Button goes here -->
+    <div id="printSearch" style="display: flex; justify-content: space-between;">
+      <button id="printButton" class="btn custom-btn" type="button"
+        onclick="printPage()"><strong>PRINT</strong></button>
+      <button id="searchButton" class="btn custom-btn" type="button" onclick="redirectToPatientList()"><strong>PATIENT
+          LIST</strong></button>
+    </div>
+
+
+  </div>
+</body>
+
+</html>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 297mm;
+    background-color: #e3f2fd;
+    /* Set the height to A4 size */
+  }
+
+  #a4-box {
+    position: relative;
+    width: 210mm;
+    /* A4 width in millimeters */
+    height: 297mm;
+    /* A4 height in millimeters */
+    background: url('https://i.ibb.co/BzdbfcX/pres.jpg') no-repeat center center;
+    background-size: cover;
+    margin: auto;
+  }
+
+  #patient-name {
+    position: absolute;
+    top: 40mm;
+    /* Adjust the position as needed in millimeters */
+    left: 80mm;
+    /* Adjust the position as needed in millimeters */
+    color: black;
+    /* Set text color to contrast with the image */
+  }
+
+  #patient-age {
+    position: absolute;
+    top: 40mm;
+    /* Adjust the position as needed in millimeters */
+    left: 183mm;
+    /* Adjust the position as needed in millimeters */
+    color: black;
+    /* Set text color to contrast with the image */
+  }
+
+  #patient-gender {
+    position: absolute;
+    top: 40mm;
+    /* Adjust the position as needed in millimeters */
+    left: 198mm;
+    /* Adjust the position as needed in millimeters */
+    color: black;
+    /* Set text color to contrast with the image */
+  }
+
+  #current-date {
+    position: absolute;
+    top: 30mm;
+    /* Adjust the position as needed in millimeters */
+    left: 183mm;
+    /* Adjust the position as needed in millimeters */
+    color: black;
+    /* Set text color to contrast with the image */
+  }
+
+  #chiefComplaint {
+    margin-top: 67mm;
+    margin-left: 70mm;
+    /* Adjust the margin as needed */
+  }
+
+  .chief-complaint-text {
+    font-size: smaller;
+    margin-top: -2mm;
+    max-width: 182mm;
+    white-space: wrap;
+  }
+
+  #onExamination {
+    margin-left: 70mm;
+    /* Adjust the margin as needed */
+  }
+
+  .on-examination-text {
+    font-size: smaller;
+    margin-top: -2mm;
+    margin-right: 10mm;
+    max-width: 170mm;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #advice {
+    margin-left: 70mm;
+    /* Adjust the margin as needed */
+  }
+
+  .advice-list {
+    font-size: smaller;
+    margin-top: -2mm;
+    max-width: 180mm;
+    white-space: wrap;
+  }
+
+  #medicine {
+    margin-left: 70mm;
+    /* Adjust the margin as needed */
+  }
+
+  .medicine-table {
+    font-size: smaller;
+    margin-top: -2mm;
+    max-width: 180mm;
+    white-space: wrap;
+    text-align: center;
+  }
+
+  #panchakarma {
+    margin-left: 70mm;
+    /* Adjust the margin as needed */
+  }
+
+  .panchakarma-list {
+    font-size: smaller;
+    margin-top: -2mm;
+    max-width: 177mm;
+    white-space: wrap;
+  }
+
+  #printSearch {
+    margin-top: 10mm;
+    margin-left: 110mm;
+    max-width: 45mm;
+  }
+
+  .custom-btn {
+    background-color: #EAEBEC;
+    /* Your preferred background color */
+    color: #2FAEF7;
+    /* Your preferred text color */
+    border: none;
+    /* Remove default button border */
+    border-radius: 20px;
+    /* Adjust border-radius for roundness */
+    padding: 5px 15px;
+    font-size: 10px;
+    display: block;
+
+  }
+
+  @media print {
+    @page {
+      mso-header-space: 0;
+      mso-footer-space: 0;
+      margin: 0;
+    }
+  }
+</style>
+
+<script>
+  function printPage() {
+    // Hide the button before printing
+    document.getElementById('printButton').style.display = 'none';
+    document.getElementById('searchButton').style.display = 'none';
+
+
+    // Print the page
+    window.print();
+
+    // Show the button again after printing
+    document.getElementById('printButton').style.display = 'inline-block';
+    document.getElementById('searchButton').style.display = 'inline-block';
+
+  }
+
+  function redirectToPatientList() {
+    // Redirect to the patient list page
+    window.location.href = '/patientlist';
+  }
+
+  // Get the current date
+  const currentDate = new Date();
+
+  // Format the date as DD-MM-YY
+  const day = String(currentDate.getDate()).padStart(2, '0');
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const year = String(currentDate.getFullYear()).slice(-2);
+
+  // Concatenate the formatted date
+  const formattedDate = `${day}-${month}-${year}`;
+
+  // Set the formatted date to the HTML element
+  document.getElementById('currentDate').textContent = formattedDate;
+
+</script>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Register</title>
+
+  <!-- NAVIGATION -->
+  <link rel="stylesheet" href="https://bootswatch.com/5/lux/bootstrap.min.css">
+
+</head>
+
+<body style="background-color: #e3f2fd;">
+
+  <!-- navigation -->
+  <nav class="navbar" style="background-color: #e3f2fd; padding-top: 5px; padding-bottom: 5px;">
+    <div class="container-fluid">
+      <a class="navbar-brand" style="margin-bottom: 0;">
+        <h1 class="display-3">DocBuddy</h1>
+      </a>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a href="/login" class="btn btn-sm btn-outline-secondary" type="button" style="width: 200px;">Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <hr style="border: 2px solid #000; margin: 0;">
+
+  <div class="container mx-auto my-5" style="max-width: 600px;"> <!-- Adjust max-width to your preference -->
+    <p class="h4 text-center">Registration</p>
+    <div class="my-5">
+      <% if (typeof error !=='undefined' && error) { %>
+        <div class="alert alert-danger" role="alert">
+          <%= error %>
+        </div>
+        <% } %>
+          <form action="/auth/register" method="post">
+            <!-- Name field -->
+            <div class="row mb-3">
+              <label for="name" class="col-sm-2 col-form-label">
+                <p class="h6">Name</p>
+              </label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="name" name="doc_name" required>
+              </div>
+            </div>
+
+            <!-- Phone Number field -->
+            <div class="row mb-3">
+              <label for="phone" class="col-sm-2 col-form-label">
+                <p class="h6">Mobile</p>
+              </label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="phone" name="doc_phone" required>
+              </div>
+            </div>
+
+            <!-- Email field -->
+            <div class="row mb-3">
+              <label for="email" class="col-sm-2 col-form-label">
+                <p class="h6">Email</p>
+              </label>
+              <div class="col-sm-10">
+                <input type="email" class="form-control" id="email" name="doc_email" required>
+              </div>
+            </div>
+
+            <!-- Password field -->
+            <div class="row mb-3">
+              <label for="password" class="col-sm-2 col-form-label">
+                <p class="h6">Password</p>
+              </label>
+              <div class="col-sm-10">
+                <input type="password" class="form-control" id="password" name="doc_password" required>
+              </div>
+            </div>
+
+            <div class="mb-3 text-center">
+              <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+          </form>
+
+          <p class="text-center mb-3">Already have an account? <a href="/login">Login</a></p>
+
+    </div>
+  </div>
+</body>
+
+</html>

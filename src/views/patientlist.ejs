@@ -1,0 +1,104 @@
+<%- include("partials/_header") %>
+
+<body style="background-color: #e3f2fd;">
+  <div class="container mt-3" style="max-width: 900px;">
+      <form action="/search" class="row mx-auto">
+        <div class="col-md-4 mb-3">
+          <div class="form-floating">
+            <input type="search" class="form-control" name="patient_name" id="floatingInputName" placeholder="Search Name">
+            <label for="floatingInputName">Search By Name</label>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="form-floating">
+            <input type="search" class="form-control" name="patient_whatsapp_number" id="floatingInputPhone" placeholder="Search Phone">
+            <label for="floatingInputPhone">Search By Phone</label>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3" style="padding-top: 1px; padding-bottom: 1px;">
+          <input type="submit" class="btn btn-sm btn-outline-secondary" style="width: 100%;" value="Search"/>
+        </div>
+      </form>
+  
+      <div class="container mx-auto mt-5">
+        <div class="row">
+            <% for (var i = 0; i < patients.length; i++) { %>
+                <div class="col-md-4 mb-3">
+                        <div class="card border-3 border-dark rounded">
+                            <div class="top-section" style="background-color: #2FAEF7; color: white;">
+                                <!-- Content for the top section with a different color -->
+                                <h5 class="card-title custom-card-title"><%= patients[i].patient_name %></h5>
+                            </div>
+                            <!-- Rest of the card content -->
+                            <div>
+                                <p style="color: #2FAEF7; font-size: 11px; margin-left: 10px; margin-top: 5px;">
+                                    Age/Gender : <span style="color: black; margin-left: 0;"><%= patients[i].patient_age %>/<%= patients[i].patient_gender %></span>
+                                    <span style="float: right; margin-right: 10px;">
+                                      <a href="/edit/<%= patients[i].patient_id %>" style="text-decoration: none; color: #2FAEF7;">
+                                        <i class="material-icons" style="cursor: pointer; font-size: 16px;">edit</i>
+                                      </a>
+                                      &nbsp;
+                                      <a href="/delete/<%= patients[i].patient_id %>" style="text-decoration: none; color: #2FAEF7;">
+                                        <i class="material-icons" style="cursor: pointer; font-size: 16px;">delete</i>
+                                      </a>
+                                    </span>
+                                    <hr style="border: 0.1px solid #000; width: calc(100% - 25px); margin-top: -3px; margin-left: auto; margin-right: auto;">
+                                </p>
+                                <div style="margin-left: 10px; display: flex; flex-direction: column; margin-top: -5px">
+                                    <div style="display: flex; align-items: center; margin-bottom: 5px;">
+                                        <i class="material-icons" style="color: #2FAEF7; font-size: 16px; margin-right: 5px;">email</i>
+                                        <span style="color: #2FAEF7; font-size: 11px;">Email : <span style="color: black; margin-left: 0;"><%= patients[i].patient_email %></span></span>
+                                    </div>
+                                    <div style="display: flex; align-items: center;">
+                                        <i class="material-icons" style="color: #2FAEF7; font-size: 16px; margin-right: 5px;">chat</i>
+                                        <i class="material-icons" style="color: #2FAEF7; font-size: 16px; margin-right: 5px;">phone</i>
+                                        <span style="color: #2FAEF7; font-size: 11px;">Mobile : <span style="color: black; margin-left: 0;"><%= patients[i].patient_whatsapp_number %></span></span>
+                                    </div>
+                                </div>
+                                <hr style="border: 0.1px solid #000; width: calc(100% - 25px); margin-top: 13px; margin-left: auto; margin-right: auto;">
+                                <a href="/patient/<%= patients[i].patient_id %>" class="btn custom-btn-style">Prescribe</a>
+                            </div>
+                        </div>
+                </div>
+                <% if ((i + 1) % 3 === 0 && i !== patients.length - 1) { %>
+                    </div>
+                    <div class="row">
+                <% } %>
+            <% } %>
+        </div>
+    </div>
+
+      <div class="row mt-3">
+        <div class="col-md-12 text-center">
+          <a href="/render-AddPatient" class="btn btn-primary">Add New Patient</a>
+        </div>
+      </div>
+    
+    </div>
+  </div>
+
+  <style>
+    .custom-card-title {
+      font-size: 0.9rem;
+      margin-left: 10px;
+      margin-top: 8px;
+    }
+  </style>
+
+<style>
+  .custom-btn-style {
+      background-color: #EAEBEC; /* Your preferred background color */
+      color: #2FAEF7; /* Your preferred text color */
+      border: none; /* Remove default button border */
+      border-radius: 20px; /* Adjust border-radius for roundness */
+      padding: 5px 15px;
+      font-size: 10px;
+      margin-top: -10px; /* Add top margin */
+      margin-bottom: 5px; /* Add bottom margin */
+      display: block; /* Center the button */
+      margin-left: auto;
+      margin-right: auto;
+  }
+</style>
+</body>
+</html>

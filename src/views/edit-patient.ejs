@@ -1,0 +1,116 @@
+<%- include("partials/_header") %>
+
+  <body style="background-color: #e3f2fd;">
+    <div class="container mx-auto mt-5" style="max-width: 800px;">
+      <p class="h4 text-center">Edit Patient Details</p>
+
+      <div class="mt-5">
+        <% if (typeof error !=='undefined' && error) { %>
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>
+              <%= error %>
+            </strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          <% } else if (typeof success !=='undefined' && success) { %>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <strong>
+                <%= success %>
+              </strong>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <% } %>
+              <form action="/update-patient/done" method="post">
+
+                <!-- Hidden input for patient_id -->
+                <input type="hidden" id="patient_id" name="patient_id" value="<%= patient.patient_id %>">
+
+                <!-- Patient Name field -->
+                <div class="row mb-3">
+                  <label for="patientName" class="col-sm-2 col-form-label">
+                    <p class="h6">Patient Name</p>
+                  </label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="patientName" name="patient_name"
+                      value="<%= patient.patient_name %>" required>
+                  </div>
+                </div>
+
+                <!-- Patient Age field -->
+                <div class="row mb-3">
+                  <label for="patientAge" class="col-sm-2 col-form-label">
+                    <p class="h6">Patient Age</p>
+                  </label>
+                  <div class="col-sm-10">
+                    <input type="number" class="form-control" id="patientAge" name="patient_age"
+                      value="<%= patient.patient_age %>" required>
+                  </div>
+                </div>
+
+                <!-- Patient Gender field -->
+                <div class="row mb-3">
+                  <label for="patientGender" class="col-sm-2 col-form-label">
+                    <p class="h6">Patient Gender</p>
+                  </label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="patientGender" name="patient_gender"
+                      value="<%= patient.patient_gender %>" required>
+                  </div>
+                </div>
+
+                <!-- Patient Blood Group field -->
+                <div class="row mb-3">
+                  <label for="patientBloodGroup" class="col-sm-2 col-form-label">
+                    <p class="h6">Patient BloudGroup</p>
+                  </label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="patientBloodGroup" name="patient_bloodgroup"
+                      value="<%= patient.patient_bloodgroup %>">
+                  </div>
+                </div>
+
+                <!-- Patient Whatsapp field -->
+                <div class="row mb-3">
+                  <label for="patientWhatsapp" class="col-sm-2 col-form-label">
+                    <p class="h6">Patient Mobile</p>
+                  </label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="patientWhatsapp" name="patient_whatsapp_number"
+                      value="<%= patient.patient_whatsapp_number %>">
+                  </div>
+                </div>
+
+                <!-- Patient Email field -->
+                <div class="row mb-3">
+                  <label for="patientWhatsapp" class="col-sm-2 col-form-label">
+                    <p class="h6">Patient Email</p>
+                  </label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="patientWhatsapp" name="patient_email"
+                      value="<%= patient.patient_email %>">
+                  </div>
+                </div>
+
+                <!-- Patient Address field -->
+                <div class="row mb-3">
+                  <label for="patientAddress" class="col-sm-2 col-form-label">
+                    <p class="h6">Patient Address</p>
+                  </label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="patientAddress" name="patient_address"
+                      value="<%= patient.patient_address %>">
+                  </div>
+                </div>
+
+
+                <div class="mb-3 text-center">
+                  <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+              </form>
+
+      </div>
+    </div>
+
+
+
+    <%- include("partials/_footer") %>
